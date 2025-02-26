@@ -1,0 +1,48 @@
+{% extends 'prev/base.html' %}
+
+{% block title %}General Reporte{% endblock %}
+
+{% block content %}
+<h1 class="display-4 fst-italic" >¡Maximiza el Potencial de Nuestra Plataforma con tus Reportes!</h1>
+<p>Hoy estás generando reportes que no solo son valiosos, sino que también pueden ser de gran utilidad para nuestra plataforma. Estos informes te permitirán:</p>
+<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    <div class="feature col">
+        <h3 class="fs-2 text-body-emphasis">Transforma datos en decisiones: </h3>
+        <p>"Crea reportes que iluminan el camino hacia el éxito."</p>
+      </a>
+    </div>
+    <div class="feature col">
+        <h3 class="fs-2 text-body-emphasis">Descubre el poder de la información: </h3>
+        <p>"Genera reportes personalizados y lleva tu estrategia al siguiente nivel."</p>
+      </a>
+    </div>
+    <div class="feature col">
+        <h3 class="fs-2 text-body-emphasis">Conviértete en el arquitecto de tu análisis:</h3>
+        <p>"Crea reportes que revelan oportunidades y optimizan resultados."</p>
+      </a>
+    </div>
+</div>
+<title>Formulario de Reporte</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h5>Formulario de Reporte</h5>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label for="comentario" class="form-label">Comentario</label>
+                    <textarea class="form-control" id="comentario" rows="3" placeholder="Escribe tu comentario" required></textarea>
+                </div>
+                <button type="submit" herf =''class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}

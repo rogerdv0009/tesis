@@ -1,0 +1,26 @@
+{% extends 'prev/base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+    <div class="title_principal">
+        <h1>Bienvenido {{ request.user }} a la página de prevención de riesgos laborales</h1>
+    </div>
+    {% if  not request.user.is_staff %}<!--is_staff administrador-->
+        <div class="descripcion_principal">
+            <p>Para ver el listado de los grupos por años académicos</p>
+        </div>
+        <a href="{% url 'academic_year_list' %}" class="btn btn-primary">Años académicos</a>
+    {% else  %}
+        {% if message_response %}
+            <div class="alert alert-success" role="alert">
+                <h5>
+                    La última respuesta a la consulta de la IA con el estudiante {{ estudiante.nombre_y_apellidos }} es:
+                </h5>
+                <p>{{ message_response }}</p>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

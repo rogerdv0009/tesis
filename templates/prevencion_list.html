@@ -1,0 +1,139 @@
+{% extends 'prev/base.html' %}
+
+{% block title %}Prevencion List{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Prevenciones</title>
+    <style>
+        .legend-box {
+            background-color: #f8f9fa; /* Color de fondo claro */
+            border: 2px solid #007bff; /* Borde azul */
+            border-radius: 10px; /* Bordes redondeados */
+            padding: 20px; /* Espaciado interno */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el efecto de elevación */
+            margin-bottom: 20px; /* Margen inferior */
+        }
+        .btn-custom {
+            background-color: #007bff; /* Color de fondo */
+            color: white; /* Color del texto */
+            border-radius: 5px; /* Bordes redondeados */
+            padding: 10px 20px; /* Espaciado interno */
+            text-decoration: none; /* Sin subrayado */
+            display: inline-block; /* Para que funcione el padding */
+        }
+        .btn-custom:hover {
+            background-color: #0056b3; /* Color de fondo al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Lista de Prevenciones</h1>
+        <div class="text-end mb-3">
+            <a href="{% url 'prevencion_create' %}" class="btn btn-success">Agregar Nueva Prevención</a>
+        </div>
+
+        <div class="legend-box">
+            <h1 class="mt-3">Leyenda:</h1>
+            <h2>Aspectos:</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="lead">1 - Numero de orden: NO</h3>
+                    <h3 class="lead">2 - Nombre y apellido: N-A</h3>
+                    <h3 class="lead">3 - Grupo: G</h3>
+                    <h3 class="lead">4 - Sexo: S [Masculino(M) y Femenino(F)]</h3>
+                    <h3 class="lead">5 - Nacionalidad: NAC</h3>
+                    <h3 class="lead">6 - Consumo Social Alcohol: CSA</h3>
+                    <h3 class="lead">7 - Consumo Riesgoso Alcohol: CRA</h3>
+                    <h3 class="lead">8 - Consumo Ocasional Cigarro: COC</h3>
+                    <h3 class="lead">9 - Consumo Regular Cigarro: CRC</h3>
+                    <h3 class="lead">10 - Otros Tipos Adicciones Numero: OTAN</h3>
+                    <h3 class="lead">10 - Otros Tipos Adicciones tipo: OTAT</h3>
+                    <h3 class="lead">11 - Consumo Psicofarmacos Receta: CPPM</h3>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="lead">12 - Consumo Psicofarmacos Automedicacion: CPFA</h3>
+                    <h3 class="lead">13 - Vinculo Grupos Sociales: VPGS</h3>
+                    <h3 class="lead">14 - Problemas Personalidad: PP</h3>
+                    <h3 class="lead">15 - Problemas Psiquiatricos: PPS</h3>
+                    <h3 class="lead">16 - Problemas Personales Familiares Sociales Economicos: PP/FSE</h3>
+                    <h3 class="lead">17 - Problemas Academicos: PAC</h3>
+                    <h3 class="lead">18 - Problemas Disciplina: PD</h3>
+                    <h3 class="lead">19 - Problema Asistencia: PA</h3>
+                    <h3 class="lead">20 - Caso Nuevo: C-N</h3>
+                    <h3 class="lead">21 - Total: T</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <tr>
+                <th scope="col">NO</th>
+                <th scope="col">N-A</th>
+                <th scope="col">G</th>
+                <th scope="col">S [Masculino(M) y Femenino(F)]</th>
+                <th scope="col">NAC</th>
+                <th scope="col">CSA</th>
+                <th scope="col">CRA</th>
+                <th scope="col">COC</th>
+                <th scope="col">CRC</th>
+                <th scope="col">OTAN</th>
+                <th scope="col">OTAT</th>
+                <th scope="col">CPPM</th>
+                <th scope="col">CPFA</th>
+                <th scope="col">VPGS</th>
+                <th scope="col">PP</th>
+                <th scope="col">PPS</th>
+                <th scope="col">PP/FSE</th>
+                <th scope="col">PAC</th>
+                <th scope="col">PD</th>
+                <th scope="col">PA</th>
+                <th scope="col">C-N</th>
+                <th scope="col">T</th>
+            </tr>
+          {% for prevencion in prevenciones %}
+            <tr>
+                <td>{{ prevencion.numero_de_orden }}</td>
+                <td>{{ prevencion.nombre_y_apellidos }}</td>
+                <td>{{ prevencion.grupo }}</td>
+                <td>{{ prevencion.sexo }}</td>
+                <td>{{ prevencion.nacionalidad }}</td>
+                <td>{{ prevencion.consumo_social_alcohol }}</td>
+                <td>{{ prevencion.consumo_riesgoso_alcohol }}</td>
+                <td>{{ prevencion.consumo_ocasional_cigarro }}</td>
+                <td>{{ prevencion.consumo_regular_cigarro }}</td>
+                <td>{{ prevencion.otros_tipos_adicciones_numero }}</td>
+                <td>{{ prevencion.otros_tipos_adicciones_tipo }}</td>
+                <td>{{ prevencion.consumo_psicofarmacos_receta}}</td>
+                <td>{{ prevencion.consumo_psicofarmacos_automedicacion }}</td>
+                <td>{{ prevencion.vinculo_grupos_sociales }}</td>
+                <td>{{ prevencion.problemas_personalidad }}</td>
+                <td>{{ prevencion.problemas_psiquiatricos }}</td>
+                <td>{{ prevencion.problemas_personales_familiares_sociales_economicos }}</td>
+                <td>{{ prevencion.problemas_academicos}}</td>
+                <td>{{ prevencion.problemas_disciplina }}</td>
+                <td>{{ prevencion.problema_asistencia }}</td>
+                <td>{{ prevencion.caso_nuevo }}</td>
+                <td>{{ prevencion.total }}</td>
+               {% if not request.user.is_staff %}
+                <td>
+                    <a href="{% url 'prevencion_update' prevencion.pk %}">Modificar</a>
+                    <form action="{% url 'prevencion_delete' prevencion.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

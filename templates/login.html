@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prevención de Vicios K-P KeyPro</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbar-static/">
+    <link rel="stylesheet" href="{% static 'library/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'library/bootstrapi/font/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">Prevencion
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+  </head>
+  <body class="vh-100">
+    <div class="container">
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-6 pt-5">
+          <div class="card card-login mt-5">
+            <div class="card-header text-white text-center position-relative" style="background-color: #0E2238;">
+              <a class="arrow" href="/"><i class="bi bi-arrow-left"></i></a>
+              <h2>Prevención de Vicios K-P KeyPro</h2>
+              <h4>Iniciar Sesión</h4>
+            </div>
+            <div class="card-body">
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="username" class="fs-5">Nombre de usuario</label>
+                  <input value="{{ back.username }}" type="text" name="username" class="form-control" id="username" placeholder="Ingresa tu nombre de usuario" />
+                </div>
+                <div class="form-group mt-2">
+                  <label for="password" class="fs-5">Contraseña</label>
+                  <input value="{{ back.password }}" type="password" name="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" />
+                </div>
+                <button type="submit" class="btn btn-block w-100 mt-4" style="background-color: #0E2238; color: white;">Acceder</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if messages %}
+      <div class="alert-container position-fixed bottom-0 start-0 p-3" style="z-index: 1100;">
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div> 
+    {% endif %}
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

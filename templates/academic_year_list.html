@@ -1,0 +1,63 @@
+{% extends 'prev/base.html' %}
+
+{% block title %}Grupos List{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Grupos</title>
+    <style>
+        .legend-box {
+            background-color: #f8f9fa; /* Color de fondo claro */
+            border: 2px solid #007bff; /* Borde azul */
+            border-radius: 10px; /* Bordes redondeados */
+            padding: 20px; /* Espaciado interno */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el efecto de elevación */
+            margin-bottom: 20px; /* Margen inferior */
+        }
+        .btn-custom {
+            background-color: #007bff; /* Color de fondo */
+            color: white; /* Color del texto */
+            border-radius: 5px; /* Bordes redondeados */
+            padding: 10px 20px; /* Espaciado interno */
+            text-decoration: none; /* Sin subrayado */
+            display: inline-block; /* Para que funcione el padding */
+        }
+        .btn-custom:hover {
+            background-color: #0056b3; /* Color de fondo al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Lista de años académicos</h1>
+    </div>
+
+    {% if academic_years %}
+        {% for academic_year in academic_years %}
+            <div class="title_academic">
+                <h2>Año Académico: {{ academic_year.number }}</h2>
+            </div>
+            <div class="years_group">
+                {% if academic_year.groups.all %}
+                    {% for group in academic_year.groups.all %}
+                        <div class="group">
+                            <div class="group_number">
+                                <h3>Grupo: {{ group.number }}</h3>
+                            </div>
+                            <div class="group_actions">
+                                <a href="{% url 'prevencion_list' group.id %}" class="btn btn-primary">Ver Prevenciones</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No hay grupos creados para este año académico.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay años académicos creados.</p>
+    {% endif %}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}

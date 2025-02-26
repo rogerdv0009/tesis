@@ -1,0 +1,51 @@
+{% extends 'prev/base.html' %}
+
+{% block title %}Consult Information{% endblock %}
+
+{% block content %}
+<h1 class="display-4 fst-italic" >Consulta tú Información</h1>
+
+<div class="container mt-5" class="col-lg-6 px-0">
+    
+    <div class="lead my-3">
+          <h2 class="display-4 fst-italic">¡Mejora tu Experiencia con Nuestra Inteligencia Artificial!</h2>
+          <p>¿Tienes un problema y no sabes por dónde empezar? Con nuestra avanzada inteligencia artificial, ahora puedes acceder a recomendaciones personalizadas que te ayudarán a encontrar la mejor solución.</p>
+        <div class="d-flex flex-column">
+            <h4>¿Qué ofrecemos?</h4>
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                <div class="feature col">
+                  <h3 class="fs-2 text-body-emphasis">Consultas Personalizadas:</h3>
+                  <p>Nuestra IA está diseñada para entender tus necesidades específicas y ofrecerte consejos adaptados a tu situación.</p>
+                </div>
+                <div class="feature col">
+                  <h3 class="fs-2 text-body-emphasis">Soluciones Efectivas: </h3>
+                  <p>Obtén estrategias prácticas y efectivas que te permitirán abordar tus problemas de manera eficiente.</p>
+                </div>
+                <div class="feature col">
+                    <h3 class="fs-2 text-body-emphasis">Asesoramiento Continuo: </h3>
+                    <p>No estás solo en este proceso. Nuestra IA te acompañará en cada paso, brindándote apoyo y sugerencias en tiempo real.</p>
+                    <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+                  </a>
+                </div>
+                <h3>Opciones</h3>
+              </div>
+              {% if estudiantes %}
+                <form action="{% url 'consultar_ia' %}" method="post">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="estudiante" class="form-label">Estudiante</label>
+                    <select class="form-control" id="estudiante" name="estudiante">
+                      {% for estudiante in estudiantes %}
+                      <option value="{{ estudiante.pk }}">{{ estudiante.nombre_y_apellidos }}</option>
+                      {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Consultar IA</button>
+                  </div>
+                </form>
+              {% endif %}
+        </div>   
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

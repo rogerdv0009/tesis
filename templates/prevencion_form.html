@@ -1,0 +1,32 @@
+
+{% extends 'prev/base.html' %}
+
+{% block title %}Prevencion List{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if form.instance.pk %}Modificar{% else %}Agregar{% endif %} Prevención</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">{% if form.instance.pk %}Modificar{% else %}Agregar{% endif %} Prevención</h1>
+        <form  method="post" class="p-4 border rounded shadow">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg w-100">Guardar</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{% url 'prevencion_list' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+
+    {% endblock %}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

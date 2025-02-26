@@ -1,0 +1,29 @@
+{% extends 'prev/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Perfil</h1>
+        <div class="user-info text-center">
+            <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}https://via.placeholder.com/100{% endif %}" 
+                 alt="Foto de perfil" 
+                 class="img-fluid rounded-circle" 
+                 style="width: 150px; height: 150px;">
+            <h2>{{ user.username }}</h2>
+            <p><strong>Rol:</strong> {{ user.get_role_display }}</p>
+            <a href="{% url 'update_profile_photo' %}" class="btn btn-primary">Actualizar Foto de Perfil</a>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

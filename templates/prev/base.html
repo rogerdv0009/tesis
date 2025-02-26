@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name "viewport" content="width=device-width,initial-scale=1.0">
+    <title>{% block title %}Mi aplicacion{% endblock %}</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbar-static/">
+    <link rel="stylesheet" href="{% static 'library/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'library/bootstrapi/font/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">Prevencion
+</head>
+<body>
+    <!-- Navegador Horizontal -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage' %}">Menú</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    {% if  not request.user.is_staff %}<!--is_staff administrador-->
+                    <li class="nav-item">
+                        <a href="{% url 'academic_year_list' %}" class="nav-link">Visualizar Lista</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'cargar_informacion' %}" class="nav-link">Cargar Información</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'general_reporte' %}" class="nav-link">Generar Reporte</a>
+                    </li>
+                    {% else  %}
+                    <!--<li class="nav-item">
+                        <a href="{% url 'profile' %}" class="nav-link">Perfil</a>
+                    </li>-->
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'consult_information' %}" class="nav-link">Consultar Información</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'user_list' %}" class="nav-link">Gestionar Usuarios</a>
+                    </li> 
+                    {% endif  %}
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link">Cerrar sesión</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="content">
+            {% block content %}
+            <!-- Aquí va el contenido específico de la página -->
+            {% endblock %}
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

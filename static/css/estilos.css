@@ -1,0 +1,470 @@
+@font-face {
+    font-family: 'fuente1';
+   src: url(./CentraNo2.otf);
+         
+    /* Puedes agregar más formatos de fuente si es necesario */
+}
+
+body{
+  background-color: whitesmoke;
+}
+/*ccs del proyecto universidad*/
+th
+,td{text-align: center;
+vertical-align: middle;
+}
+
+.navegador_principal{
+    
+    height: 70px;
+}
+.seccion_libro{
+  /* padding: 20px 0 20px 250px; */
+  margin-top: 20px;
+}
+.tabla_libro{
+  margin: 20px 0 0 20px;
+}
+.tabla-reporte{
+  width: 90%;
+}
+.card_paquete{
+  border-radius: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.315);
+  transition: all .3s ease;
+}
+.titulo_libro{
+  padding: 20px 0;
+}
+.imagen_detalle{
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.sinopsis_libro{
+  padding-top: 20px;
+}
+.imagen_detalle img{
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: all .5s ease;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.imagen_detalle img:hover{
+  transform: scale(1.1);
+}
+.genero_libro{
+  padding: 10px 0;
+}
+.libro_detalle{
+  padding: 20px 0 0 250px;
+}
+.margin_caja{
+  padding-top: 40px;
+}
+.card_paquete:hover{
+  transform: translateY(-10px);
+  box-shadow: 0 0 20px rgb(0, 119, 255);
+}
+.filtrar_c{
+  display: flex;
+  flex-direction: row;
+  margin: 20px 10px;
+}
+.img_paquete{
+  position: relative;
+}
+.img_paquete img{
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+.mostrar_paquete{
+  position: absolute;
+  top: 84%;
+  left: 85%;
+  background-color: rgba(0, 0, 0, 0.404);
+  border-radius: 5px;
+}
+.mostrar_paquete a{
+  font-size: 20px;
+  color: white;
+  padding: 10px;
+}
+.navegador_principal a{
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 9px;
+}
+
+.navegador_principal a:hover{
+  
+    text-decoration: underline;
+    border-radius: 9px;
+    transition: all 0.5s ease;
+}
+
+a {
+    text-decoration: none;
+}
+.login-page {
+    width: 100%;
+    height: 100vh;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+}
+.form-right i {
+    font-size: 100px;
+}
+
+.sidebar{
+    background-color: #fcfcfc;
+    box-shadow: 0 .4rem .8rem 0 rgba(0,0,0,.3);
+    padding: 5px 10px;
+}
+
+.sidebar a,.contactenos{
+    font-size: 20px;
+    color: #000;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}
+
+.sidebar a:hover{
+   background-color: rgba(0,0,0,0.1);
+   border-radius: 5px;
+}
+
+.sidebar .conntactenos:hover{
+    color: gold;
+}
+
+.navbar{
+    box-shadow: 0 .4rem .3rem 0 rgba(0, 0, 0, 0.336);
+    padding: 10px;
+    background-color: rgba(240, 248, 255, 0.986);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.navbar a{
+    font-size: 20px;
+    color: #000;
+    font-family: 'fuente1';
+   
+}
+
+.navbar a:hover{
+    text-decoration: underline;
+}
+
+.card{
+    box-shadow: 0 .4rem .3rem 0 rgba(0,0,0,.3);
+}
+
+@media screen and (min-width:768px) {
+  
+
+  #fixed-column {
+    position: fixed;
+    top: 0;
+    height: 100%;
+}
+
+
+}
+
+@media screen and (max-width:768px) {
+
+  #fixed-column {
+    margin-top: 80px;
+
+    box-shadow: none !important;
+    
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 10px;
+    right: 10px;
+  }
+}
+
+img{
+    height:150px;
+    width:100%;
+  }
+  
+  div [class^="col-"]{
+    padding-left:5px;
+    padding-right:5px;
+  }
+  .card{
+    transition:0.5s;
+    cursor:pointer;
+  }
+  .card-title{  
+    font-size:15px;
+    transition:1s;
+    cursor:pointer;
+  }
+  .card-title i{  
+    font-size:15px;
+    transition:1s;
+    cursor:pointer;
+    color:#ffa710
+  }
+  .card-title i:hover{
+    transform: scale(1.25) rotate(100deg); 
+    color:#18d4ca;
+    
+  }
+  .card:hover{
+    transform: scale(1.05);
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+  }
+  .card-text{
+    height:80px;  
+  }
+  
+  .card::before, .card::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: scale3d(0, 0, 1);
+    transition: transform .3s ease-out 0s;
+    background: rgba(255, 255, 255, 0.1);
+    content: '';
+    pointer-events: none;
+  }
+  .card::before {
+    transform-origin: left top;
+  }
+  .card::after {
+    transform-origin: right bottom;
+  }
+  .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
+    transform: scale3d(1, 1, 1);
+  }
+
+
+
+  .portada{
+    margin-top: 20px;
+    text-align: justify;
+    background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+    background-size: 400% 400%;
+    height: 600px;
+  }
+.portada_2{
+  height: 300px;
+}
+
+
+.boton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30%;
+	height: 50px;
+	background: #830707;
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	font-weight: 500;
+	border: none;
+	cursor: pointer;
+	text-transform: uppercase;
+	transition: .3s ease all;
+	border-radius: 5px;
+	position: relative;
+	overflow: hidden;
+  top: 100%;
+  margin-top: 300px;
+  margin-left: 100px;
+}
+
+.boton span {
+	position: relative;
+	z-index: 2;
+	transition: .3s ease all;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+.boton.cinco span {
+	transition: .4s ease-in-out all;
+	position: absolute;
+	left: 25%;
+}
+
+.boton.cinco .icono {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	z-index: 2;
+	left: -40px;
+	transition: .3s ease-in-out all;
+	opacity: 0;
+}
+
+.boton.cinco svg {
+	color: #fff;
+	width: 35px;
+	height: 35px;
+}
+
+.boton.cinco:hover {
+	background: rgb(4, 4, 100);
+}
+
+.boton.cinco:hover .icono {
+	left: calc(100% - 50px);
+	opacity: 1;
+}
+
+.boton.cinco:hover span {
+	left: 20px;
+}
+
+
+/**Portada Principal*/
+
+.portada{
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.cartel p{
+  font-size: 100px;
+  margin-bottom: 100px;
+  position: absolute;
+  background-color: #0000003a;
+  width: 1222px;
+  height: 600px;
+  padding: 100px;
+  color: #fff;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.cartel_inferior p{
+  font-size: 60px;
+  padding:100px;
+  margin-top: 150px;
+  color: #fff;
+  position: absolute;
+}
+.descripcion_paquete{
+  background-color: white;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+.locacion_paquete{
+  padding: 15px 10px 10px;
+}
+.locacion_paquete p{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: left;
+}
+.locacion_paquete p i{
+  color: yellow;
+}
+.tiempo_estancia_paquete{
+  padding: 10px;
+}
+.tiempo_estancia_paquete p{
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: left;
+}
+.precio_paquete{
+  padding: 10px;
+}
+.precio_paquete p{
+  margin: 0;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+.acciones_paquete{
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+.acciones_paquete button{
+  font-size: 15px;
+  padding: 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: none;
+  color: black;
+  background-color: transparent;
+}
+.listado_libro_cliente{
+ margin-top: 40px;
+}
+.formulario_carrito{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid black;
+}
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) { 
+  .mostrar_paquete{
+    top: 75%;
+    left: 80%;
+  }
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) { 
+  .mostrar_paquete{
+    top: 80%;
+    left: 85%;
+  }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) { 
+
+}
+
+/* X-Large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) { 
+
+}
+
+/* XX-Large devices (larger desktops, 1400px and up)*/
+@media (min-width: 1400px) { 
+  .mostrar_paquete{
+    top: 80%;
+  }
+}
+
+.enunciado_equipo h1{
+  margin-bottom: 40px;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 40px;
+}
+
+/*ACADEMIC YEAR*/
+
+.years_group .group{
+  display: flex;
+  gap: 20px;
+}

@@ -37,6 +37,7 @@
         {% for academic_year in academic_years %}
             <div class="title_academic">
                 <h2>Año Académico: {{ academic_year.number }}</h2>
+                <a class="btn btn-secondary btn-sm" href="{% url 'estadistica_year' academic_year.id %}">Ver Estadística</a>
             </div>
             <div class="years_group">
                 {% if academic_year.groups.all %}
@@ -47,6 +48,7 @@
                             </div>
                             <div class="group_actions">
                                 <a href="{% url 'prevencion_list' group.id %}" class="btn btn-primary">Ver Prevenciones</a>
+                                <a href="{% url 'estadistica_grupo' group.id %}" class="btn btn-success">Ver Estadística</a>
                             </div>
                         </div>
                     {% endfor %}

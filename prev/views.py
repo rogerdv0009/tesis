@@ -163,7 +163,7 @@ def cargar_informacion(request):
 
         cargar_datos_desde_excel(ruta_archivo, academic_year)
 
-        return HttpResponse("<a href='{% url 'prevencion_list'%}'>Volver al listado</a><br><h2>Datos cargados exitosamente.</h2>")
+        return HttpResponse("<a href='http://127.0.0.1:8000/academic_year/'>Volver al listado</a><br><h2>Datos cargados exitosamente.</h2>")
     
     return render(request, 'prev/cargar_informacion.html')
 
@@ -186,6 +186,77 @@ def gestionar_usuarios(request):
 @login_required
 def profile_view(request):
     return render(request, 'profile.html')
+
+
+###Estadisticas
+class AcademicYearStatiticsView(View):
+    """ Class to generate the year statistics """
+    def get(self, request, *args, **kwargs):
+        academic_year = get_object_or_404(AcademicYear, pk=kwargs['year_id'])
+        campo_valor = [
+        'consumo_social_alcohol',
+        'consumo_riesgoso_alcohol',
+        'consumo_ocasional_cigarro',
+        'consumo_regular_cigarro',
+        'otros_tipos_adicciones_numero',
+        'consumo_psicofarmacos_receta',
+        'consumo_psicofarmacos_automedicacion',
+        'vinculo_grupos_sociales_numero',
+        'problemas_personalidad',
+        'problemas_psiquiatricos',
+        'problemas_personales_familiares_sociales_economicos',
+        'problemas_academicos',
+        'problemas_disciplina',
+        'problema_asistencia',
+        'caso_nuevo',
+        ]
+        total = 0
+        estadisticas = {}
+        grupos = Group.objects.filter(academic_year=academic_year)
+        print(grupos)
+        for grupo in grupos:
+            estudiantes = Prevencion.objects.filter(groups=grupo)
+            print(estudiantes)
+            for campo in campo_valor:
+                count = estudiantes.filter(**{campo: 1}).count()
+                total += count
+                nombre_campo = campo.replace('_', ' ').title()
+                if nombre_campo not in estadisticas:
+                    estadisticas[nombre_campo] = count
+                else:
+                    estadisticas[nombre_campo] += count
+        return render(request, 'academic_year_estadistica.html', {'academic_year':academic_year, 'estadisticas': estadisticas, 'total': total})
+
+class GroupStatiticsView(View):
+    """ Class to generate the statistics """
+    def get(self, request, *args, **kwargs):
+        grupo = get_object_or_404(Group, pk=kwargs['group_id'])
+        campo_valor = [
+            'consumo_social_alcohol',
+            'consumo_riesgoso_alcohol',
+            'consumo_ocasional_cigarro',
+            'consumo_regular_cigarro',
+            'otros_tipos_adicciones_numero',
+            'consumo_psicofarmacos_receta',
+            'consumo_psicofarmacos_automedicacion',
+            'vinculo_grupos_sociales_numero',
+            'problemas_personalidad',
+            'problemas_psiquiatricos',
+            'problemas_personales_familiares_sociales_economicos',
+            'problemas_academicos',
+            'problemas_disciplina',
+            'problema_asistencia',
+            'caso_nuevo',
+        ]
+        estudiantes = Prevencion.objects.filter(groups=grupo)
+        estadisticas = {}
+        total = 0
+        for campo in campo_valor:
+            count = estudiantes.filter(**{campo: 1}).count()
+            total += count
+            nombre_legible = campo.replace('_', ' ').title()
+            estadisticas[nombre_legible] = count
+        return render(request, 'estadisticas.html', {'estadisticas': estadisticas, 'grupo': grupo,  'total': total})
 
 
 ###CLASS TO GENERATE THE IA RESPONSE

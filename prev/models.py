@@ -68,6 +68,34 @@ class Prevencion(models.Model):
     def __str__(self):
         return self.nombre_y_apellidos
     
+    def obtener_atributos_positivos(self):
+        atributos_positivos = []
+        
+        nombres_campos = {
+            'consumo_social_alcohol',
+            'consumo_riesgoso_alcohol',
+            'consumo_ocasional_cigarro',
+            'consumo_regular_cigarro',
+            'otros_tipos_adicciones_numero',
+            'consumo_psicofarmacos_receta',
+            'consumo_psicofarmacos_automedicacion',
+            'vinculo_grupos_sociales_numero',
+            'problemas_personalidad',
+            'problemas_psiquiatricos',
+            'problemas_personales_familiares_sociales_economicos',
+            'problemas_academicos',
+            'problemas_disciplina',
+            'problema_asistencia',
+            'caso_nuevo',
+        }
+        
+        for campo in nombres_campos:
+            valor = getattr(self, campo)
+            if valor == 1:
+                atributos_positivos.append(campo)
+        return atributos_positivos
+    
+    
     def obtener_mensaje_atributos_positivos(self):
         partes_mensaje = []
         
@@ -121,7 +149,6 @@ class Group(models.Model):
         verbose_name=_("Group Number"),
         max_length=255,
         help_text=_("Enter the group number."),
-        unique=True,
         blank=True,
         null=True,
     )

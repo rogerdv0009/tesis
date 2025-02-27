@@ -3,7 +3,7 @@ from .views import (prevencion_list,update_profile_photo, profile_view, prevenci
                     update_profile_photo, prevencion_update, prevencion_delete, profile, 
                     consult_information, cargar_informacion, general_reporte, gestionar_usuarios, 
                     user_list, user_create, user_update, user_delete, homepage, academic_year_list,
-                    )
+                    GroupStatiticsView, AcademicYearStatiticsView)
 from django.conf import settings
 from django.conf.urls.static import static
 # urls.py
@@ -30,6 +30,8 @@ urlpatterns = [
     path('update-profile-photo/', update_profile_photo, name='update_profile_photo'), 
     path('update-profile-photo/', update_profile_photo, name='update_profile_photo'),
     path('profile/', profile_view, name='profile'),
+    path("estadistica_grupo/<int:group_id>", GroupStatiticsView.as_view(), name="estadistica_grupo"),
+    path("estadistica_year/<int:year_id>", AcademicYearStatiticsView.as_view(), name="estadistica_year"),
     #path("consultar_ia/", ConsultIA.as_view(), name="consultar_ia")
 ] 
 

@@ -59,13 +59,23 @@ def cargar_datos_desde_excel(ruta_archivo, academic_year):
             continue  # Continúa con la siguiente fila
         
     if preventions_list:
-        group = Group(academic_year=academic_year)
-        group.save()
+        group_number = preventions_list[0].grupo
+        existing_group = Group.objects.filter(
+            number=group_number,
+            academic_year=academic_year,
+        ).first()
+        if existing_group:
+            group = existing_group
+        else:
+            group = Group(number=group_number, academic_year=academic_year)
+            group.save()
         for prevencion in preventions_list:
-            if not group.number:
-                group.number = prevencion.grupo
             if group.number == prevencion.grupo:
-                group.prevenciones.add(prevencion)
+                existing_prevencion = group.prevenciones.filter(
+                    nombre_y_apellidos=prevencion.nombre_y_apellidos,
+                ).exists()
+                if not existing_prevencion:
+                    group.prevenciones.add(prevencion)
         group.save()
 
 # class FormatedMessages:

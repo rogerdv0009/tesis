@@ -5,9 +5,9 @@ from .models import Prevencion
 from .forms import PrevencionForm
 from django.shortcuts import render
 from django.http import HttpResponse
-from .utils import cargar_datos_desde_excel # FormatedMessages, GPTResponse  # Asegúrate de importar la función
-from .models import Profile, AcademicYear, Group
-from .forms import UserForm, ProfileForm
+from .utils import cargar_datos_desde_excel, GPTResponse  # Asegúrate de importar la función
+from .models import AcademicYear, Group
+from .forms import UserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -57,18 +57,14 @@ def user_create(request):
 @login_required
 def user_update(request, pk):
     user = get_object_or_404(User, pk=pk)
-    profile = user.profile
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)
-        profile_form = ProfileForm(request.POST, instance=profile)
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             user_form.save()
-            profile_form.save()
             return redirect('user_list')
     else:
         user_form = UserForm(instance=user)
-        profile_form = ProfileForm(instance=profile)
     return render(request, 'user_form.html', {'user_form': user_form})
 
 @login_required
@@ -261,15 +257,14 @@ class GroupStatiticsView(View):
 
 ###CLASS TO GENERATE THE IA RESPONSE
 
-# class ConsultIA(View):
-#     """ Class to generate the IA response """
-#     manager_response = GPTResponse()
-#     formated_messages = FormatedMessages()
+class ConsultIA(View):
+    """ Class to generate the IA response """
+    manager_response = GPTResponse()
     
-#     def post(self, request, *args, **kwargs):
-#         estudiante_id = request.POST.get('estudiante')
-#         estudiante = get_object_or_404(Prevencion, pk=estudiante_id)
-#         message = estudiante.obtener_mensaje_atributos_positivos()
-#         messages = self.formated_messages.get_formatted_messages(message)
-#         response = self.manager_response.response_manager(messages)
-#         return render(request, 'homepage.html', {'message_response': response, 'estudiante': estudiante})
+    def post(self, request, *args, **kwargs):
+        estudiante_id = request.POST.get('estudiante')
+        estudiante = get_object_or_404(Prevencion, pk=estudiante_id)
+        message = estudiante.obtener_mensaje_atributos_positivos()
+        response = self.manager_response.get_response(message)
+        message_response = response.get('result')
+        return render(request, 'homepage.html', {'message_response': message_response, 'estudiante': estudiante})

@@ -1,8 +1,9 @@
 import pandas as pd
 from .models import Prevencion, Group
+import requests
 #import openai
 from django.conf import settings
-from .constances import SYSTEM_PROMPT
+from .constances import FIRST_PROMPT
 
 # API_KEY = settings.API_KEY_OPEN_AI
 # client = openai.OpenAI(api_key=API_KEY)
@@ -78,36 +79,43 @@ def cargar_datos_desde_excel(ruta_archivo, academic_year):
                     group.prevenciones.add(prevencion)
         group.save()
 
-# class FormatedMessages:
-#     """ Class to handle GPT IA messages """
 
-#     def __format_messages(self, messages):
-#         formatted_messages = [
-#             # {
-#             #     "role": "system",
-#             #     "content": SYSTEM_PROMPT,
-#             # },
-#             {
-#                 "role": "user",
-#                 "content": messages,
-#             }
-#         ]
-#         return formatted_messages
+class GPTResponse:
+    """ Class to handle GPT IA messages """
+    def get_response(self, message:str):
+        complete_message = f"{FIRST_PROMPT} {message}. Responde en español"
+        try:
+            url = "https://open-ai21.p.rapidapi.com/conversationllama"
 
-#     def get_formatted_messages(self, messages):
-#         return self.__format_messages(messages)
+            payload = {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": complete_message
+                    }
+                ],
+                "web_access": False
+            }
+            headers = {
+                "x-rapidapi-key": "f03c533075mshd4e84ad82837ff8p110df2jsn7ad1f9eae356",
+                "x-rapidapi-host": "open-ai21.p.rapidapi.com",
+                "Content-Type": "application/json"
+            }
 
-# class GPTResponse:
-#     """ Class to handle GPT IA responses """
-    
-#     def __handle_response(self, response):
-#         response_text = response.choices[0].message.content
-#         return response_text
-    
-#     def response_manager(self, prompt):
-#         response = client.chat.completions.create(
-#             model="gpt-4o",
-#             messages=prompt
-#         )
-#         return self.__handle_response(response)
+            response = requests.post(url, json=payload, headers=headers)
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            # Handles network errors, timeouts, etc
+            return {"error": f"Request failed: {str(e)}"}
+        
+        except requests.exceptions.JSONDecodeError as e:
+            # Handles invalid JSON responses
+            return {"error": f"Invalid response format: {str(e)}"}
+            
+        except Exception as e:
+            # Catches any other unexpected errors
+            return {"error": f"Unexpected error: {str(e)}"}
+            
+
+
         

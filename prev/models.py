@@ -4,9 +4,6 @@ from django.utils.translation import gettext_lazy as _
 # prev/models.py
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    email_verified = models.BooleanField(default=False)
 
 class CustomUser(AbstractUser):
        profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
@@ -122,7 +119,7 @@ class Prevencion(models.Model):
                 partes_mensaje.append(nombre_mostrar)
         
         if partes_mensaje:
-            return "El estudiante presenta: " + ", ".join(partes_mensaje)
+            return "El usuario presenta: " + ", ".join(partes_mensaje)
         return "No se encontraron factores de riesgo"
     
     class Meta:

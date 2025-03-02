@@ -3,7 +3,6 @@ from .models import Prevencion, reporte
 # forms.py
 
 from django.contrib.auth.models import User
-from .models import Profile
 from django import forms
 from .models import CustomUser
 
@@ -28,10 +27,6 @@ class UserForm(forms.ModelForm):
             user_instance = self.instance.user
             usuario_instance = self.instance
    
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = '__all__'
 
 class PrevencionForm(forms.ModelForm):
     class Meta:

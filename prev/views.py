@@ -209,10 +209,8 @@ class AcademicYearStatiticsView(View):
         total = 0
         estadisticas = {}
         grupos = Group.objects.filter(academic_year=academic_year)
-        print(grupos)
         for grupo in grupos:
             estudiantes = Prevencion.objects.filter(groups=grupo)
-            print(estudiantes)
             for campo in campo_valor:
                 count = estudiantes.filter(**{campo: 1}).count()
                 total += count

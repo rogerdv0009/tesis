@@ -1,19 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, F
-from .models import Prevencion
+from django.urls import reverse_lazy
+from .models import Prevencion, Reporte
 from .forms import PrevencionForm
 from django.shortcuts import render
 from django.http import HttpResponse
 from .utils import cargar_datos_desde_excel, GPTResponse  # Asegúrate de importar la función
 from .models import AcademicYear, Group
-from .forms import UserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import ReporteForm
 import tempfile
-from django.views.generic import View
+from django.contrib import messages
+from django.views.generic import View, CreateView, DeleteView, TemplateView
 
 
 
@@ -163,16 +164,6 @@ def cargar_informacion(request):
     
     return render(request, 'prev/cargar_informacion.html')
 
-@login_required
-def general_reporte(request):
-    if request.method == "POST":
-        form = ReporteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(' ')
-    else:
-        form = ReporteForm()
-    return render(request, 'prev/general_reporte.html')
 
 @login_required
 def gestionar_usuarios(request):
@@ -252,6 +243,10 @@ class GroupStatiticsView(View):
             estadisticas[nombre_legible] = count
         return render(request, 'estadisticas.html', {'estadisticas': estadisticas, 'grupo': grupo,  'total': total})
 
+class GroupDeleteView(DeleteView):
+    model = Group
+    success_url = reverse_lazy('academic_year_list')
+    template_name = 'prev/grupo_delete.html'
 
 ###CLASS TO GENERATE THE IA RESPONSE
 
@@ -266,3 +261,74 @@ class ConsultIA(View):
         response = self.manager_response.get_response(message)
         message_response = response.get('result')
         return render(request, 'homepage.html', {'message_response': message_response, 'estudiante': estudiante})
+
+class ReportCreateView(CreateView):
+    model = Reporte
+    form_class = ReporteForm
+    template_name = 'prev/general_reporte.html'
+    success_url = reverse_lazy('homepage')
+    
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        comentario = request.POST.get('comentario')
+        reporte = Reporte(usuario=user, comentario=comentario)
+        reporte.save()
+        return redirect('homepage')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'El reporte ha sido creado exitosamente.')
+        return super().form_valid(form)
+    
+class ReportListView(View):
+    template_name = 'prev/reporte_listado.html'
+    
+    def get(self, request, *args, **kwargs):
+        reports = Reporte.objects.all()
+        academic_years = AcademicYear.objects.all()
+        campo_valor = [
+        'consumo_social_alcohol',
+        'consumo_riesgoso_alcohol',
+        'consumo_ocasional_cigarro',
+        'consumo_regular_cigarro',
+        'otros_tipos_adicciones_numero',
+        'consumo_psicofarmacos_receta',
+        'consumo_psicofarmacos_automedicacion',
+        'vinculo_grupos_sociales_numero',
+        'problemas_personalidad',
+        'problemas_psiquiatricos',
+        'problemas_personales_familiares_sociales_economicos',
+        'problemas_academicos',
+        'problemas_disciplina',
+        'problema_asistencia',
+        'caso_nuevo',
+        ]
+        total = 0
+        estadisticas = {}
+        annos = {}
+        for academic_year in academic_years:
+            grupos = Group.objects.filter(academic_year=academic_year)
+            if academic_year.number not in annos:
+                annos[academic_year.number] = {}
+            for grupo in grupos:
+                estudiantes = Prevencion.objects.filter(groups=grupo)
+                for campo in campo_valor:
+                    count = estudiantes.filter(**{campo: 1}).count()
+                    total += count
+                    nombre_campo = campo.replace('_', ' ').title()
+                    if nombre_campo not in estadisticas:
+                        estadisticas[nombre_campo] = count
+                    else:
+                        estadisticas[nombre_campo] += count
+            annos[academic_year.number] = estadisticas
+            annos[academic_year.number]['total'] = total
+            total = 0
+            estadisticas = {}
+        return render(request, self.template_name, {'reports': reports, 'annos': annos})
+
+class ReportDeleteView(DeleteView):
+    model = Reporte
+    success_url = reverse_lazy('listar_reporte')
+    template_name = 'prev/reporte_delete.html'
+    
+class ReporteTemplateView(TemplateView):
+    template_name = 'prev/general_reporte.html'

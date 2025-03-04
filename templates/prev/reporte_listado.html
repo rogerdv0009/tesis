@@ -1,0 +1,68 @@
+{% extends 'prev/base.html' %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+    <div class="container pb-5">
+        <h1>Estadísticas</h1>
+    </div>
+    {% if annos %}
+        <div class="estadisticas-container">
+            <div class="row">
+                {% for year, stats in annos.items %}
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="seccion-año">
+                            <h2>Año {{ year }}</h2>
+                            
+                            <table class="tabla-estadisticas">
+                                <thead>
+                                    <tr>
+                                        <th>Indicador</th>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for indicador, valor in stats.items %}
+                                        {% if indicador != 'total' %}
+                                            <tr>
+                                                <td>{{ indicador }}</td>
+                                                <td>{{ valor }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <tr class="fila-total">
+                                        <td><strong>Total</strong></td>
+                                        <td><strong>{{ stats.total }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <h4>No hay años académicos creados.</h4>
+    {% endif %}
+    <div class="container pt-5">
+        <h1>Reportes</h1>
+    </div>
+    {% if reports %}
+        <div class="reportes-container">
+            <div class="row">
+                {% for report in reports %}
+                    <div class="col-12">
+                        <div class="reporte">
+                            <h4>{{ report.usuario }}</h4>
+                            <p>{{ report.comentario }}</p>
+                            <a class="btn btn-danger btn-sm" href="{% url 'eliminar_reporte' report.id %}">Eliminar</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <h4>No hay reportes.</h4>
+    {% endif %}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

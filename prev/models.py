@@ -5,27 +5,27 @@ from django.utils.translation import gettext_lazy as _
 
 
 
-class CustomUser(AbstractUser):
-       profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
+# class CustomUser(AbstractUser):
+#        profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
 
-       groups = models.ManyToManyField(
-           Group,
-           related_name='customuser_set',  # Cambia el nombre aquí para evitar conflictos
-           blank=True,
-           help_text='The groups this user belongs to.',
-           verbose_name='groups'
-       )
+#        groups = models.ManyToManyField(
+#            Group,
+#            related_name='customuser_set',  # Cambia el nombre aquí para evitar conflictos
+#            blank=True,
+#            help_text='The groups this user belongs to.',
+#            verbose_name='groups'
+#        )
 
-       user_permissions = models.ManyToManyField(
-           Permission,
-           related_name='customuser_set',  # Cambia el nombre aquí para evitar conflictos
-           blank=True,
-           help_text='Specific permissions for this user.',
-           verbose_name='user permissions'
-       )
+#        user_permissions = models.ManyToManyField(
+#            Permission,
+#            related_name='customuser_set',  # Cambia el nombre aquí para evitar conflictos
+#            blank=True,
+#            help_text='Specific permissions for this user.',
+#            verbose_name='user permissions'
+#        )
 
-class reporte(models.Model):
-    nombre_de_usario =  models.ForeignKey(User, on_delete=models.CASCADE)
+class Reporte(models.Model):
+    usuario =  models.ForeignKey(User, on_delete=models.CASCADE)
     comentario = models.TextField(null=True, blank=True, max_length=255)
 
 

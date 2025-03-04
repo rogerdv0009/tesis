@@ -32,12 +32,13 @@
             <h5>Formulario de Reporte</h5>
         </div>
         <div class="card-body">
-            <form>
+            <form method="post" action="{% url 'crear_reporte' %}">
+                {% csrf_token %}
                 <div class="mb-3">
                     <label for="comentario" class="form-label">Comentario</label>
-                    <textarea class="form-control" id="comentario" rows="3" placeholder="Escribe tu comentario" required></textarea>
+                    <textarea name="comentario" class="form-control" id="comentario" rows="3" placeholder="Escribe tu comentario" required></textarea>
                 </div>
-                <button type="submit" herf =''class="btn btn-primary">Enviar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
         </div>
     </div>

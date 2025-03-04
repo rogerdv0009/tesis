@@ -49,6 +49,7 @@
                             <div class="group_actions">
                                 <a href="{% url 'prevencion_list' group.id %}" class="btn btn-primary">Ver Prevenciones</a>
                                 <a href="{% url 'estadistica_grupo' group.id %}" class="btn btn-success">Ver Estadística</a>
+                                <a href="{% url 'eliminar_grupo' group.id %}" class="btn btn-danger">Eliminar</a>
                             </div>
                         </div>
                     {% endfor %}

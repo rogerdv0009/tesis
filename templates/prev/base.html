@@ -30,7 +30,7 @@
                         <a href="{% url 'cargar_informacion' %}" class="nav-link">Cargar Información</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'general_reporte' %}" class="nav-link">Generar Reporte</a>
+                        <a href="{% url 'template_reporte' %}" class="nav-link">Generar Reporte</a>
                     </li>
                     {% else  %}
                     <!--<li class="nav-item">
@@ -42,6 +42,9 @@
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'user_list' %}" class="nav-link">Gestionar Usuarios</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a href="{% url 'listar_reporte' %}" class="nav-link">Reportes</a>
                     </li> 
                     {% endif  %}
                     <li class="nav-item">
@@ -55,7 +58,15 @@
             </div>
         </div>
     </nav>
-
+    {% if messages %}
+      <div class="alert-container position-fixed bottom-0 start-0 p-3" style="z-index: 1100;">
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div> 
+    {% endif %}
     <div class="container mt-4">
         <div class="content">
             {% block content %}

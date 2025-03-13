@@ -84,26 +84,88 @@ def academic_year_list(request):
 @login_required
 def prevencion_list(request, group_id):
     group = get_object_or_404(Group, id=group_id)
-    prevenciones = Prevencion.objects.annotate(
-        total=(
-            F('consumo_social_alcohol') +
-            F('consumo_riesgoso_alcohol') +
-            F('consumo_ocasional_cigarro') +
-            F('consumo_regular_cigarro') +
-            F('otros_tipos_adicciones_numero') +
-            F('consumo_psicofarmacos_receta') +
-            F('consumo_psicofarmacos_automedicacion') +
-            F('vinculo_grupos_sociales_numero') +
-            F('problemas_personalidad') +
-            F('problemas_psiquiatricos') +
-            F('problemas_personales_familiares_sociales_economicos') +
-            F('problemas_academicos') +
-            F('problemas_disciplina') +
-            F('problema_asistencia') +
-            F('caso_nuevo')
-        )
-    ).filter(groups = group)
-    return render(request, 'prevencion_list.html', {'prevenciones': prevenciones})
+    if request.GET.get('filtro_nombre') and not request.GET.get('filtro_sexo'):
+        prevenciones = Prevencion.objects.annotate(
+            total=(
+                F('consumo_social_alcohol') +
+                F('consumo_riesgoso_alcohol') +
+                F('consumo_ocasional_cigarro') +
+                F('consumo_regular_cigarro') +
+                F('otros_tipos_adicciones_numero') +
+                F('consumo_psicofarmacos_receta') +
+                F('consumo_psicofarmacos_automedicacion') +
+                F('vinculo_grupos_sociales_numero') +
+                F('problemas_personalidad') +
+                F('problemas_psiquiatricos') +
+                F('problemas_personales_familiares_sociales_economicos') +
+                F('problemas_academicos') +
+                F('problemas_disciplina') +
+                F('problema_asistencia') +
+                F('caso_nuevo')
+            )
+        ).filter(groups = group, nombre_y_apellidos__icontains=request.GET.get("filtro_nombre"))
+    elif request.GET.get('filtro_sexo') and not request.GET.get('filtro_nombre'):
+        prevenciones = Prevencion.objects.annotate(
+            total=(
+                F('consumo_social_alcohol') +
+                F('consumo_riesgoso_alcohol') +
+                F('consumo_ocasional_cigarro') +
+                F('consumo_regular_cigarro') +
+                F('otros_tipos_adicciones_numero') +
+                F('consumo_psicofarmacos_receta') +
+                F('consumo_psicofarmacos_automedicacion') +
+                F('vinculo_grupos_sociales_numero') +
+                F('problemas_personalidad') +
+                F('problemas_psiquiatricos') +
+                F('problemas_personales_familiares_sociales_economicos') +
+                F('problemas_academicos') +
+                F('problemas_disciplina') +
+                F('problema_asistencia') +
+                F('caso_nuevo')
+            )
+        ).filter(groups = group, sexo=request.GET.get("filtro_sexo"))
+    elif request.GET.get('filtro_nombre') and request.GET.get('filtro_sexo'):
+        prevenciones = Prevencion.objects.annotate(
+            total=(
+                F('consumo_social_alcohol') +
+                F('consumo_riesgoso_alcohol') +
+                F('consumo_ocasional_cigarro') +
+                F('consumo_regular_cigarro') +
+                F('otros_tipos_adicciones_numero') +
+                F('consumo_psicofarmacos_receta') +
+                F('consumo_psicofarmacos_automedicacion') +
+                F('vinculo_grupos_sociales_numero') +
+                F('problemas_personalidad') +
+                F('problemas_psiquiatricos') +
+                F('problemas_personales_familiares_sociales_economicos') +
+                F('problemas_academicos') +
+                F('problemas_disciplina') +
+                F('problema_asistencia') +
+                F('caso_nuevo')
+            )
+        ).filter(groups = group, sexo=request.GET.get("filtro_sexo"), nombre_y_apellidos__icontains=request.GET.get("filtro_nombre"))
+    else:
+        prevenciones = Prevencion.objects.annotate(
+            total=(
+                F('consumo_social_alcohol') +
+                F('consumo_riesgoso_alcohol') +
+                F('consumo_ocasional_cigarro') +
+                F('consumo_regular_cigarro') +
+                F('otros_tipos_adicciones_numero') +
+                F('consumo_psicofarmacos_receta') +
+                F('consumo_psicofarmacos_automedicacion') +
+                F('vinculo_grupos_sociales_numero') +
+                F('problemas_personalidad') +
+                F('problemas_psiquiatricos') +
+                F('problemas_personales_familiares_sociales_economicos') +
+                F('problemas_academicos') +
+                F('problemas_disciplina') +
+                F('problema_asistencia') +
+                F('caso_nuevo')
+            )
+        ).filter(groups = group)
+        
+    return render(request, 'prevencion_list.html', {'prevenciones': prevenciones, 'group': group})
 
 @login_required
 def prevencion_create(request):
@@ -111,7 +173,7 @@ def prevencion_create(request):
         form = PrevencionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('prevencion_list')
+            return redirect('homepage')
     else:
         form = PrevencionForm()
     return render(request, 'prevencion_form.html', {'form': form})
@@ -123,7 +185,7 @@ def prevencion_update(request, pk):
         form = PrevencionForm(request.POST, instance=prevencion)
         if form.is_valid():
             form.save()
-            return redirect('prevencion_list')
+            return redirect('homepage')
     else:
         form = PrevencionForm(instance=prevencion)
     return render(request, 'prevencion_form.html', {'form': form})
@@ -133,7 +195,7 @@ def prevencion_delete(request, pk):
     prevencion = get_object_or_404(Prevencion, pk=pk)
     if request.method == "POST":
         prevencion.delete()
-        return redirect('prevencion_list')
+        return redirect('homepage')
     return render(request, 'prevencion_delete_confirm.html', {'prevencion': prevencion})
 
 @login_required
